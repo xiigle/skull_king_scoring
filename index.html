@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1d2a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Skull King – Journal de bord</title>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@700&family=Alegreya:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--sea:#0b1d2a;--deep:#07121b;--wood:#3b2414;--wood2:#5a3820;--parch:#f0e2bd;--ink:#2b1a0e;--gold:#e3b04b;--red:#b3261e;--green:#3f8f5a;--mute:#9fb3bf;--num:'Cinzel','Georgia',serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:radial-gradient(ellipse at top,#16384d 0,var(--sea) 45%,var(--deep) 100%) fixed;color:var(--parch);font-family:'Alegreya',Georgia,serif;font-size:17px;font-variant-numeric:lining-nums;max-width:560px;margin:0 auto;min-height:100vh}
+h1,h2,h3,.fancy{font-family:'Pirata One','Georgia',serif;font-weight:400;letter-spacing:.5px}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{padding:14px 14px 90px}
+.title{text-align:center;margin:6px 0 14px}
+.title h1{font-size:46px;margin:0;color:var(--gold);text-shadow:0 3px 0 #000a,0 0 24px #e3b04b55;line-height:1}
+.title p{margin:4px 0 0;color:var(--mute);font-style:italic}
+.skull{font-size:44px;filter:drop-shadow(0 3px 0 #000a)}
+.card{background:linear-gradient(160deg,var(--parch),#dfcb9a);color:var(--ink);border-radius:10px;padding:14px;margin-bottom:14px;border:3px solid var(--wood2);box-shadow:0 6px 0 var(--wood),0 10px 20px #0008}
+.card h2{margin:0 0 10px;font-size:26px;color:var(--wood)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{border:3px solid #b9a06a;background:#f7edcf;border-radius:8px;padding:10px;text-align:left;color:var(--ink)}
+.mode b{font-family:'Pirata One',serif;font-size:21px;display:block;font-weight:400}
+.mode small{font-size:14px;line-height:1.15;display:block;opacity:.85}
+.mode.on{border-color:var(--red);background:#fff4d2;box-shadow:inset 0 0 0 2px var(--red)}
+.row{display:flex;align-items:center;gap:10px}
+.sp{justify-content:space-between}
+.stp{display:flex;align-items:center;gap:6px}
+.stp button{width:42px;height:42px;border-radius:50%;border:2px solid var(--wood);background:var(--wood2);color:var(--parch);font-size:24px;line-height:1;padding:0;box-shadow:0 3px 0 var(--wood)}
+.stp button:active{transform:translateY(2px);box-shadow:0 1px 0 var(--wood)}
+.stp button:disabled{opacity:.3;box-shadow:none}
+.stp output{min-width:34px;text-align:center;font-family:var(--num);font-size:24px;color:var(--ink)}
+input.nm{width:100%;padding:10px 12px;font:inherit;font-size:18px;border:2px solid #b9a06a;border-radius:8px;background:#fff9e6;color:var(--ink);margin-bottom:8px}
+input.nm:focus{outline:3px solid var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chip{display:flex;border-radius:20px;overflow:hidden;border:2px solid var(--wood2);background:#fff4d2}
+.chip button{background:none;border:0;padding:6px 10px;color:var(--ink)}
+.chip button.x{padding:6px 10px;border-left:2px solid var(--wood2);color:var(--red);font-weight:700}
+.big{width:100%;padding:14px;border:3px solid #000;border-radius:10px;background:linear-gradient(var(--red),#7e1510);color:#fff;font-family:'Pirata One',serif;font-size:26px;letter-spacing:1px;box-shadow:0 5px 0 #4a0b08}
+.big:active{transform:translateY(3px);box-shadow:0 2px 0 #4a0b08}
+.small{background:var(--wood2);border:2px solid var(--wood);border-radius:8px;padding:8px 12px;color:var(--parch)}
+.small.alt{background:transparent;border-color:#ffffff40}
+.hint{font-size:14px;opacity:.75;margin:0 0 6px}
+/* game */
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.top h1{margin:0;font-size:30px;color:var(--gold)}
+.badge{font-size:13px;background:#0006;border:1px solid var(--gold);border-radius:12px;padding:2px 8px;color:var(--gold)}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:12px}
+.pb{background:#0007;border:2px solid #e3b04b55;border-radius:10px;padding:6px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.pb.lead{border-color:var(--gold);background:#e3b04b22}
+.pb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pb b{font-family:var(--num);font-size:19px;color:var(--gold)}
+.pb b.neg{color:#ff8a80}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button{flex:1;padding:9px;border-radius:8px;border:2px solid var(--wood2);background:#0005}
+.tabs button.on{background:var(--wood2);color:var(--gold);border-color:var(--gold)}
+.rounds{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}
+.rounds::-webkit-scrollbar{display:none}
+.rd{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:2px solid #e3b04b66;background:#0006;font-family:var(--num);font-size:17px;position:relative}
+.rd.on{background:var(--gold);color:var(--ink);border-color:#fff}
+.rd.ok::after{content:'✓';position:absolute;right:-2px;top:-4px;font-size:13px;background:var(--green);color:#fff;border-radius:50%;width:16px;height:16px;line-height:16px;font-family:sans-serif}
+.info{display:flex;justify-content:space-between;align-items:center;margin:2px 2px 10px;gap:8px;flex-wrap:wrap}
+.info h2{margin:0;font-size:19px;color:var(--gold);font-family:var(--num)}
+.warn{color:#ffb4a8}.ok{color:#9be3b3}
+.pc{background:linear-gradient(160deg,var(--parch),#dfcb9a);color:var(--ink);border-radius:10px;border:3px solid var(--wood2);margin-bottom:10px;padding:10px 12px;box-shadow:0 4px 0 var(--wood)}
+.pc .h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.pc .h b{font-family:'Pirata One',serif;font-size:24px;color:var(--wood);font-weight:400}
+.sc{font-family:var(--num);font-size:19px}
+.sc.p{color:#1e7a43}.sc.n{color:var(--red)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lbl{font-size:14px;text-align:center;opacity:.8}
+.two .stp{justify-content:center}
+.bt{margin-top:8px;width:100%;background:#00000012;border:1px dashed var(--wood2);border-radius:8px;padding:6px;color:var(--ink);font-size:15px}
+.bon{margin-top:8px;border-top:1px dashed var(--wood2);padding-top:6px}
+.bon .row{padding:3px 0}
+.bon .stp button{width:34px;height:34px;font-size:20px}
+.bon .stp output{font-size:19px;min-width:46px}
+.nav{display:flex;gap:8px;margin-top:6px}
+.nav button{flex:1}
+.win{background:linear-gradient(160deg,#ffe28a,#e3b04b);color:var(--ink);border:3px solid #fff;border-radius:12px;text-align:center;padding:12px;margin-bottom:12px;box-shadow:0 0 30px #e3b04b88}
+.win .fancy{font-size:30px}
+.tw{overflow-x:auto;border-radius:10px;border:3px solid var(--wood2)}
+table{border-collapse:collapse;width:100%;background:var(--parch);color:var(--ink);font-size:16px}
+th,td{padding:8px 6px;text-align:center;border-bottom:1px solid #b9a06a}
+th{background:var(--wood2);color:var(--parch);font-weight:400;font-family:'Pirata One',serif;font-size:17px;white-space:nowrap}
+td:first-child,th:first-child{position:sticky;left:0;background:var(--wood);color:var(--parch);font-family:var(--num)}
+tr[data-r]{cursor:pointer}
+tfoot td{font-weight:700;font-size:18px;background:#e3b04b}
+tfoot td:first-child{background:var(--wood)}
+td small{display:block;font-size:12px;opacity:.65}
+.neg{color:var(--red)}
+.modal{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;padding:20px;z-index:9}
+.modal .card{max-width:380px;width:100%;margin:0}
+.modal .row{margin-top:12px}
+.modal .row button{flex:1}
+.sel{width:100%;padding:10px 12px;font:inherit;font-size:17px;border:2px solid #b9a06a;border-radius:8px;background:#fff9e6;color:var(--ink)}
+.tg{padding:9px 4px;border-radius:8px;border:2px solid var(--wood2);background:#fff4d2;color:var(--ink);font-size:15px}
+.tg.on{background:var(--red);color:#fff;border-color:#000}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+const FM={classic:[1,2,3,4,5,6,7,8,9,10],pairs:[2,2,4,4,6,6,8,8,10,10],ready:[6,7,8,9,10],blitz:[5,5,5,5,5],barrage:Array(10).fill(10),whirl:[9,9,7,7,5,5,3,3,1,1],sleep:[1]};
+const L={
+fr:{name:'Français',settings:"Réglages",zoom:"Taille de l'affichage",close:"Fermer",tag:'Journal de bord du Capitaine',resume:'⚓ Reprendre la partie en cours',calc:'Mode de calcul',skd:'Classique : 20 pts/pli si mise exacte, sinon on perd des points. Audacieux !',rad:'10 pts/carte en jeu : tout, moitié ou rien selon la précision.',cn:'☄ Boulet de canon (règle optionnelle Rascal)',cnd:'Après la mise, chacun choisit : Chevrotine (règle habituelle) ou Boulet de canon (15 pts par carte si mise exacte, sinon 0).',fmt:'Format de la partie',f_classic:'Classique',f_pairs:"Pas d'impair",f_ready:'Prêt au combat',f_blitz:'Attaque éclair',f_barrage:'Tir de barrage',f_whirl:'Tourbillon',f_sleep:"L'heure du dodo",finfo:'{0} manche(s) · cartes : {1}',crew:"L'équipage",count:'Nombre de pirates',pirate:'Pirate',saved:'Noms enregistrés (touchez pour ajouter, ✕ pour supprimer)',none:"Aucun nom pour l'instant.",start:"Lever l'ancre !",lang:'Langue',dup:'Deux pirates portent le même nom. Donnez-leur des noms différents.',ok:'OK',forget:'Oublier le nom « {0} » ?',del:'Supprimer',att:'Attention, moussaillon !',cancel:'Annuler',newg:'Nouvelle partie',newc:"Abandonner ce navire et préparer une nouvelle partie ? La partie en cours reste sauvegardée jusqu'au lancement de la suivante.",classic:'Classique',win:'🏆 Capitaine des Sept Mers : {0} !',wpts:'avec {0} points',tabr:'Manche',tabt:'Tableau',round:'Manche',card:'carte',cards:'cartes',dealer:'Donneur : {0} — ouvre : {1}',sum:'Plis saisis : {0} / {1}',should:'— le total devrait être {0}',prog:'en cours…',bid:'Mise',won:'Plis gagnés',shot:'Chevrotine',ball:'Boulet de canon',bon:'💰 Bonus : {0} pts',b_a:'14 de couleur',b_b:'14 noir',b_c:'Sirènes capturées par un pirate',b_d:'Pirates capturés par Skull King',b_e:'Skull King capturé par une sirène',b_f:'Ajustement libre (règles optionnelles)',h_sk:'Les bonus ne comptent que si la mise est exacte.',h_ra:'Bonus complets si coup direct, moitié si frappe à revers.',validate:'✓ Valider la manche',valid:'✓ Manche validée — vous pouvez encore la modifier.',prev:'‹ Précédente',next:'Suivante ›',th:'Touchez une ligne pour modifier la manche.',tf:'Petit chiffre : mise / plis gagnés.',vw:'Le total des plis gagnés est {0} au lieu de {1}. Valider quand même ?',valb:'Valider'},
+en:{name:'English',settings:"Settings",zoom:"Display size",close:"Close",tag:"Captain's Logbook",resume:'⚓ Resume current game',calc:'Scoring mode',skd:'Classic: 20 pts per trick if your bid is exact, otherwise you lose points. Bold!',rad:'10 pts per card dealt: all, half or nothing depending on accuracy.',cn:'☄ Cannonball (optional Rascal rule)',cnd:'After bidding, everyone chooses: Buckshot (usual rule) or Cannonball (15 pts per card if your bid is exact, otherwise 0).',fmt:'Game format',f_classic:'Classic',f_pairs:'No odds',f_ready:'Battle ready',f_blitz:'Blitz attack',f_barrage:'Barrage',f_whirl:'Whirlwind',f_sleep:'Bedtime',finfo:'{0} round(s) · cards: {1}',crew:'The crew',count:'Number of pirates',pirate:'Pirate',saved:'Saved names (tap to add, ✕ to delete)',none:'No saved names yet.',start:'Weigh anchor!',lang:'Language',dup:'Two pirates have the same name. Please use different names.',ok:'OK',forget:'Forget the name “{0}”?',del:'Delete',att:'Careful, matey!',cancel:'Cancel',newg:'New game',newc:'Abandon ship and set up a new game? The current game stays saved until the next one starts.',classic:'Classic',win:'🏆 Captain of the Seven Seas: {0}!',wpts:'with {0} points',tabr:'Round',tabt:'Table',round:'Round',card:'card',cards:'cards',dealer:'Dealer: {0} — leads: {1}',sum:'Tricks entered: {0} / {1}',should:'— total should be {0}',prog:'in progress…',bid:'Bid',won:'Tricks won',shot:'Buckshot',ball:'Cannonball',bon:'💰 Bonus: {0} pts',b_a:'Colour 14s',b_b:'Black 14',b_c:'Mermaids captured by a pirate',b_d:'Pirates captured by Skull King',b_e:'Skull King captured by a mermaid',b_f:'Free adjustment (optional rules)',h_sk:'Bonuses only count if the bid is exact.',h_ra:'Full bonuses on a direct hit, half on a glancing blow.',validate:'✓ Confirm round',valid:'✓ Round confirmed — you can still edit it.',prev:'‹ Previous',next:'Next ›',th:'Tap a row to edit that round.',tf:'Small figure: bid / tricks won.',vw:'Tricks won add up to {0} instead of {1}. Confirm anyway?',valb:'Confirm'},
+es:{name:'Español',settings:"Ajustes",zoom:"Tamaño de pantalla",close:"Cerrar",tag:'Diario de a bordo del Capitán',resume:'⚓ Continuar la partida en curso',calc:'Modo de puntuación',skd:'Clásico: 20 pts por baza si aciertas la apuesta; si no, pierdes puntos. ¡Audaz!',rad:'10 pts por carta repartida: todo, la mitad o nada según la precisión.',cn:'☄ Bala de cañón (regla opcional de Rascal)',cnd:'Tras apostar, cada uno elige: Perdigones (regla habitual) o Bala de cañón (15 pts por carta si aciertas, si no 0).',fmt:'Formato de la partida',f_classic:'Clásico',f_pairs:'Sin impares',f_ready:'Listos para el combate',f_blitz:'Ataque relámpago',f_barrage:'Fuego de barrera',f_whirl:'Torbellino',f_sleep:'Hora de dormir',finfo:'{0} ronda(s) · cartas: {1}',crew:'La tripulación',count:'Número de piratas',pirate:'Pirata',saved:'Nombres guardados (toca para añadir, ✕ para borrar)',none:'Aún no hay nombres guardados.',start:'¡Levar anclas!',lang:'Idioma',dup:'Dos piratas tienen el mismo nombre. Usa nombres distintos.',ok:'OK',forget:'¿Olvidar el nombre «{0}»?',del:'Borrar',att:'¡Cuidado, grumete!',cancel:'Cancelar',newg:'Nueva partida',newc:'¿Abandonar el barco y preparar una nueva partida? La partida actual queda guardada hasta que empiece la siguiente.',classic:'Clásico',win:'🏆 Capitán de los Siete Mares: {0}.',wpts:'con {0} puntos',tabr:'Ronda',tabt:'Tabla',round:'Ronda',card:'carta',cards:'cartas',dealer:'Reparte: {0} — sale: {1}',sum:'Bazas anotadas: {0} / {1}',should:'— el total debería ser {0}',prog:'en curso…',bid:'Apuesta',won:'Bazas ganadas',shot:'Perdigones',ball:'Bala de cañón',bon:'💰 Bonus: {0} pts',b_a:'14 de color',b_b:'14 negro',b_c:'Sirenas capturadas por un pirata',b_d:'Piratas capturados por Skull King',b_e:'Skull King capturado por una sirena',b_f:'Ajuste libre (reglas opcionales)',h_sk:'Los bonus solo cuentan si la apuesta es exacta.',h_ra:'Bonus completos con acierto directo, la mitad si fallas por uno.',validate:'✓ Validar la ronda',valid:'✓ Ronda validada — aún puedes modificarla.',prev:'‹ Anterior',next:'Siguiente ›',th:'Toca una fila para modificar la ronda.',tf:'Cifra pequeña: apuesta / bazas ganadas.',vw:'Las bazas ganadas suman {0} en lugar de {1}. ¿Validar de todos modos?',valb:'Validar'},
+de:{name:'Deutsch',settings:"Einstellungen",zoom:"Anzeigegröße",close:"Schließen",tag:'Logbuch des Kapitäns',resume:'⚓ Laufendes Spiel fortsetzen',calc:'Wertungsmodus',skd:'Klassisch: 20 Punkte pro Stich bei exakter Ansage, sonst Punktabzug. Mutig!',rad:'10 Punkte pro ausgeteilter Karte: alles, die Hälfte oder nichts je nach Genauigkeit.',cn:'☄ Kanonenkugel (optionale Rascal-Regel)',cnd:'Nach der Ansage wählt jeder: Schrot (übliche Regel) oder Kanonenkugel (15 Punkte pro Karte bei exakter Ansage, sonst 0).',fmt:'Spielformat',f_classic:'Klassisch',f_pairs:'Keine Ungeraden',f_ready:'Gefechtsbereit',f_blitz:'Blitzangriff',f_barrage:'Sperrfeuer',f_whirl:'Wirbelwind',f_sleep:'Schlafenszeit',finfo:'{0} Runde(n) · Karten: {1}',crew:'Die Mannschaft',count:'Anzahl Piraten',pirate:'Pirat',saved:'Gespeicherte Namen (antippen zum Hinzufügen, ✕ zum Löschen)',none:'Noch keine Namen gespeichert.',start:'Anker lichten!',lang:'Sprache',dup:'Zwei Piraten haben denselben Namen. Bitte unterschiedliche Namen wählen.',ok:'OK',forget:'Den Namen „{0}“ vergessen?',del:'Löschen',att:'Vorsicht, Landratte!',cancel:'Abbrechen',newg:'Neues Spiel',newc:'Das Schiff verlassen und ein neues Spiel vorbereiten? Das laufende Spiel bleibt gespeichert, bis das nächste startet.',classic:'Klassisch',win:'🏆 Kapitän der Sieben Meere: {0}!',wpts:'mit {0} Punkten',tabr:'Runde',tabt:'Tabelle',round:'Runde',card:'Karte',cards:'Karten',dealer:'Geber: {0} — spielt aus: {1}',sum:'Erfasste Stiche: {0} / {1}',should:'— Summe sollte {0} sein',prog:'läuft…',bid:'Ansage',won:'Gewonnene Stiche',shot:'Schrot',ball:'Kanonenkugel',bon:'💰 Bonus: {0} Pkt.',b_a:'Farbige 14er',b_b:'Schwarze 14',b_c:'Von einem Piraten gefangene Meerjungfrauen',b_d:'Von Skull King gefangene Piraten',b_e:'Von einer Meerjungfrau gefangener Skull King',b_f:'Freie Anpassung (optionale Regeln)',h_sk:'Boni zählen nur bei exakter Ansage.',h_ra:'Volle Boni bei Volltreffer, die Hälfte bei Abweichung um 1.',validate:'✓ Runde bestätigen',valid:'✓ Runde bestätigt — du kannst sie weiterhin ändern.',prev:'‹ Zurück',next:'Weiter ›',th:'Zeile antippen, um die Runde zu ändern.',tf:'Kleine Zahl: Ansage / gewonnene Stiche.',vw:'Die gewonnenen Stiche ergeben {0} statt {1}. Trotzdem bestätigen?',valb:'Bestätigen'},
+it:{name:'Italiano',settings:"Impostazioni",zoom:"Dimensione schermo",close:"Chiudi",tag:'Diario di bordo del Capitano',resume:'⚓ Riprendi la partita in corso',calc:'Modalità di punteggio',skd:'Classico: 20 punti per presa se la scommessa è esatta, altrimenti si perdono punti. Audace!',rad:'10 punti per carta distribuita: tutto, metà o niente in base alla precisione.',cn:'☄ Palla di cannone (regola opzionale Rascal)',cnd:'Dopo la scommessa, ognuno sceglie: Pallini (regola abituale) o Palla di cannone (15 punti per carta se la scommessa è esatta, altrimenti 0).',fmt:'Formato della partita',f_classic:'Classico',f_pairs:'Niente dispari',f_ready:'Pronti al combattimento',f_blitz:'Attacco lampo',f_barrage:'Fuoco di sbarramento',f_whirl:'Tornado',f_sleep:"L'ora della nanna",finfo:'{0} mano/i · carte: {1}',crew:"L'equipaggio",count:'Numero di pirati',pirate:'Pirata',saved:'Nomi salvati (tocca per aggiungere, ✕ per eliminare)',none:'Nessun nome salvato.',start:"Salpa l'ancora!",lang:'Lingua',dup:'Due pirati hanno lo stesso nome. Usa nomi diversi.',ok:'OK',forget:'Dimenticare il nome «{0}»?',del:'Elimina',att:'Attenzione, mozzo!',cancel:'Annulla',newg:'Nuova partita',newc:"Abbandonare la nave e preparare una nuova partita? La partita in corso resta salvata fino all'avvio della prossima.",classic:'Classico',win:'🏆 Capitano dei Sette Mari: {0}!',wpts:'con {0} punti',tabr:'Mano',tabt:'Tabella',round:'Mano',card:'carta',cards:'carte',dealer:'Mazziere: {0} — apre: {1}',sum:'Prese inserite: {0} / {1}',should:'— il totale dovrebbe essere {0}',prog:'in corso…',bid:'Scommessa',won:'Prese vinte',shot:'Pallini',ball:'Palla di cannone',bon:'💰 Bonus: {0} pt',b_a:'14 colorati',b_b:'14 nero',b_c:'Sirene catturate da un pirata',b_d:'Pirati catturati da Skull King',b_e:'Skull King catturato da una sirena',b_f:'Regolazione libera (regole opzionali)',h_sk:'I bonus contano solo se la scommessa è esatta.',h_ra:'Bonus pieni con colpo diretto, metà se sbagli di uno.',validate:'✓ Conferma la mano',valid:'✓ Mano confermata — puoi ancora modificarla.',prev:'‹ Precedente',next:'Successiva ›',th:'Tocca una riga per modificare la mano.',tf:'Numero piccolo: scommessa / prese vinte.',vw:'Le prese vinte sommano {0} invece di {1}. Confermare comunque?',valb:'Conferma'}};
+let lang=LS('sk_lang');if(!L[lang])lang='fr';
+const t=(k,...a)=>{let s=L[lang][k]??L.fr[k]??k;a.forEach((v,i)=>s=s.replace('{'+i+'}',v));return s};
+let names=LS('sk_names')||[], G=LS('sk_game'), view='round', openBonus={};
+let setup={mode:'sk',n:4,pl:['','','','',' '].slice(0,4),cannon:false,fmt:'classic'};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const save=()=>LS('sk_game',G);
+const bonusOf=b=>b?10*b.a+20*b.b+20*b.c+30*b.d+40*b.e+(b.f||0):0;
+const newB=()=>({a:0,b:0,c:0,d:0,e:0,f:0});
+const fmt=n=>Number.isInteger(n)?n:n.toFixed(1);
+
+function score(ri,pi){return G.rounds[ri].ok?raw(ri,pi):null}
+function raw(ri,pi){
+  const R=G.rounds[ri],r=G.cards[ri],bid=R.bid[pi],tk=R.tr[pi];
+  if(bid==null||tk==null)return null;
+  const bo=bonusOf(R.bo[pi]),d=Math.abs(bid-tk);
+  if(G.mode==='sk'){
+    if(d===0)return bid===0?10*r+bo:20*bid+bo;
+    return bid===0?-10*r:-10*d;
+  }
+  if(G.cannon&&R.cn[pi])return d===0?15*r+bo:0;
+  const full=10*r+bo;
+  return d===0?full:d===1?full/2:0;
+}
+const total=pi=>G.rounds.reduce((s,_,i)=>s+(score(i,pi)||0),0);
+const done=ri=>!!G.rounds[ri].ok;
+
+function ask(msg,yes,label){
+  const m=document.createElement('div');m.className='modal';
+  m.innerHTML=`<div class="card"><h2>${t('att')}</h2><div>${msg}</div><div class="row"><button class="small" style="color:var(--parch)" data-n>${t('cancel')}</button><button class="small" style="background:var(--red)" data-y>${label||t('valb')}</button></div></div>`;
+  m.onclick=e=>{if(e.target.dataset.y!==undefined){m.remove();yes()}else if(e.target===m||e.target.dataset.n!==undefined)m.remove()};
+  document.body.appendChild(m);
+}
+
+/* ---------- RÉGLAGES ---------- */
+const ZS=[70,80,90,100,110,120,130,140,150];
+let zoom=LS('sk_zoom');if(!ZS.includes(zoom))zoom=100;
+const applyZoom=()=>{$('#app').style.zoom=zoom/100};
+function settings(){
+  document.querySelectorAll('.modal').forEach(x=>x.remove());
+  const m=document.createElement('div');m.className='modal';
+  m.innerHTML=`<div class="card"><h2>⚙ ${t('settings')}</h2>
+  <div class="row sp" style="margin-bottom:12px"><span>🌐 ${t('lang')}</span><select id="lang" class="sel" style="width:auto">${Object.keys(L).map(k=>`<option value="${k}" ${k===lang?'selected':''}>${L[k].name}</option>`).join('')}</select></div>
+  <div class="row sp" style="margin-bottom:14px"><span>🔎 ${t('zoom')}</span><div class="stp"><button data-z="-1">−</button><output id="zv" style="min-width:58px;font-size:20px">${zoom}%</output><button data-z="1">+</button></div></div>
+  <button class="big" style="font-size:22px;padding:10px" data-ng>＋ ${t('newg')}</button>
+  <div class="row"><button class="small" style="color:var(--parch)" data-n>${t('close')}</button></div></div>`;
+  m.onclick=e=>{
+    const z=e.target.closest('[data-z]');
+    if(z){zoom=ZS[Math.max(0,Math.min(ZS.length-1,ZS.indexOf(zoom)+ +z.dataset.z))];LS('sk_zoom',zoom);applyZoom();m.querySelector('#zv').textContent=zoom+'%';return}
+    if(e.target.closest('[data-ng]')){m.remove();ask(t('newc'),()=>{G._setup=true;setup.pl=Array.from({length:8},(_,i)=>setup.pl[i]||'');render()},t('newg'));return}
+    if(e.target===m||e.target.closest('[data-n]'))m.remove();
+  };
+  document.body.appendChild(m);
+}
+
+/* ---------- SETUP ---------- */
+function renderSetup(){
+  const s=setup,ra=s.mode==='ra';document.documentElement.lang=lang;
+  $('#app').innerHTML=`
+  <div class="row" style="justify-content:flex-end"><label class="hint" style="margin:0;color:var(--mute)">🌐 <select id="lang" class="sel" style="width:auto;padding:4px 8px;font-size:15px">${Object.keys(L).map(k=>`<option value="${k}" ${k===lang?'selected':''}>${L[k].name}</option>`).join('')}</select></label></div>
+  <div class="title"><div class="skull">☠️</div><h1>Skull King</h1><p>${t('tag')}</p></div>
+  ${G?`<button class="big" style="margin-bottom:14px;background:linear-gradient(var(--green),#245c39);box-shadow:0 5px 0 #153823" data-a="resume">${t('resume')}</button>`:''}
+  <div class="card"><h2>${t('calc')}</h2><div class="modes">
+    <button class="mode ${!ra?'on':''}" data-a="mode" data-m="sk"><b>☠ Skull King</b><small>${t('skd')}</small></button>
+    <button class="mode ${ra?'on':''}" data-a="mode" data-m="ra"><b>🗡 Rascal</b><small>${t('rad')}</small></button>
+  </div>
+  ${ra?`<button class="mode ${s.cannon?'on':''}" style="width:100%;margin-top:10px" data-a="cannon"><b>${t('cn')}</b><small>${t('cnd')}</small></button>`:''}</div>
+  <div class="card"><h2>${t('fmt')}</h2><select id="fmt" class="sel">${Object.keys(FM).map(k=>`<option value="${k}" ${k===s.fmt?'selected':''}>${t('f_'+k)}</option>`).join('')}</select><p class="hint" style="margin:8px 0 0">${t('finfo',FM[s.fmt].length,FM[s.fmt].join(', '))}</p></div>
+  <div class="card"><h2>${t('crew')}</h2>
+    <div class="row sp" style="margin-bottom:10px"><span>${t('count')}</span><div class="stp"><button data-a="cnt" data-d="-1">−</button><output>${s.n}</output><button data-a="cnt" data-d="1">+</button></div></div>
+    ${s.pl.slice(0,s.n).map((p,i)=>`<input class="nm" data-i="${i}" maxlength="16" placeholder="${t('pirate')} ${i+1}" value="${esc(p)}" autocomplete="off">`).join('')}
+    <p class="hint" style="margin-top:10px">${t('saved')}</p>
+    <div class="chips">${names.length?names.map((n,i)=>`<div class="chip"><button data-a="pick" data-i="${i}">${esc(n)}</button><button class="x" data-a="del" data-i="${i}" aria-label="${t('del')}">✕</button></div>`).join(''):`<span class="hint">${t('none')}</span>`}</div>
+  </div>
+  <button class="big" data-a="start">${t('start')}</button>`;
+}
+
+function startGame(){
+  const pl=setup.pl.slice(0,setup.n).map((p,i)=>p.trim()||t('pirate')+' '+(i+1));
+  if(new Set(pl.map(p=>p.toLowerCase())).size<pl.length){ask(t('dup'),()=>{},t('ok'));return}
+  pl.forEach((p,i)=>{if(setup.pl[i]&&setup.pl[i].trim()&&!names.includes(p))names.push(p)});
+  LS('sk_names',names);
+  const cards=FM[setup.fmt].slice();
+  G={mode:setup.mode,cannon:setup.mode==='ra'&&setup.cannon,cards,players:pl,cur:0,rounds:cards.map(()=>({ok:false,bid:pl.map(()=>0),tr:pl.map(()=>0),cn:pl.map(()=>false),bo:pl.map(newB)}))};
+  save();view='round';render();
+}
+
+/* ---------- GAME ---------- */
+const trMax=(R,p)=>Math.max(0,G.cards[G.cur]-R.tr.reduce((s,x,i)=>s+(i===p?0:(x||0)),0));
+function stepper(a,p,v,max=99){return `<div class="stp"><button data-a="${a}" data-p="${p}" data-d="-1">−</button><output>${v==null?'?':v}</output><button data-a="${a}" data-p="${p}" data-d="1" ${v!=null&&v>=max?'disabled':''}>+</button></div>`}
+const BON=[['a','🟢🟡🟣 ',3,'+10'],['b','🏴‍☠️ ',1,'+20'],['c','🧜 ',2,'+20'],['d','🏴‍☠️ ',5,'+30'],['e','💀 ',1,'+40']];
+
+function renderGame(){
+  document.documentElement.lang=lang;
+  const r=G.cur,R=G.rounds[r],n=G.cards[r],pls=G.players,last=G.rounds.length-1;
+  const tots=pls.map((_,i)=>total(i));const mx=Math.max(...tots);
+  const order=pls.map((_,i)=>i).sort((a,b)=>tots[b]-tots[a]);
+  const allDone=G.rounds.every((_,i)=>done(i));
+  const sumT=R.tr.reduce((a,b)=>a+b,0);
+  let h=`<div class="top"><h1>☠ Skull King</h1><div class="row"><span class="badge">${G.mode==='sk'?t('classic'):'Rascal'+(G.cannon?' ☄':'')}</span><button class="small alt" style="font-size:20px;padding:4px 10px" data-a="menu" aria-label="${t('settings')}">⚙</button></div></div>`;
+  if(allDone){const w=order.filter(i=>tots[i]===mx).map(i=>esc(pls[i])).join(' & ');h+=`<div class="win"><div class="fancy">${t('win',w)}</div><div>${t('wpts',fmt(mx))}</div></div>`}
+  h+=`<div class="board">${order.map(i=>`<div class="pb ${tots[i]===mx&&mx!==0?'lead':''}"><span>${tots[i]===mx&&mx>0?'👑 ':''}${esc(pls[i])}</span><b class="${tots[i]<0?'neg':''}">${fmt(tots[i])}</b></div>`).join('')}</div>`;
+  h+=`<div class="tabs"><button class="${view==='round'?'on':''}" data-a="view" data-v="round">${t('tabr')}</button><button class="${view==='table'?'on':''}" data-a="view" data-v="table">${t('tabt')}</button></div>`;
+  if(view==='table')return h+renderTable();
+  h+=`<div class="rounds">${G.rounds.map((_,i)=>`<button class="rd ${i===r?'on':''} ${done(i)?'ok':''}" data-a="go" data-r="${i}">${i+1}</button>`).join('')}</div>`;
+  const dealer=esc(pls[r%pls.length]),first=esc(pls[(r+1)%pls.length]);
+  h+=`<div class="info"><h2>${t('round')} ${r+1} · ${n} ${t(n>1?'cards':'card')}</h2><span class="hint" style="margin:0;color:var(--mute)">${t('dealer',dealer,first)}</span></div>`;
+  h+=`<p class="${sumT===n?'ok':'warn'}" style="margin:0 2px 8px">${t('sum',sumT,n)} ${sumT===n?'✓':t('should',n)}</p>`;
+  pls.forEach((p,i)=>{
+    const sc=raw(r,i),op=openBonus[r+'_'+i],bo=bonusOf(R.bo[i]),f=R.bo[i].f||0;
+    h+=`<div class="pc"><div class="h"><b>${esc(p)}</b>${sc!==null?`<span class="sc ${sc<0?'n':'p'}">${sc>0?'+':''}${fmt(sc)}</span>`:`<span class="lbl">${t('prog')}</span>`}</div>
+    <div class="two"><div><div class="lbl">${t('bid')}</div>${stepper('bid',i,R.bid[i],n)}</div><div><div class="lbl">${t('won')}</div>${stepper('tr',i,R.tr[i],trMax(R,i))}</div></div>
+    ${G.cannon?`<div class="two" style="margin-top:8px"><button class="tg ${!R.cn[i]?'on':''}" data-a="cn" data-p="${i}" data-v="0">🔫 ${t('shot')}</button><button class="tg ${R.cn[i]?'on':''}" data-a="cn" data-p="${i}" data-v="1">☄ ${t('ball')}</button></div>`:''}
+    <button class="bt" data-a="bt" data-p="${i}">${t('bon',bo)} ${op?'▲':'▼'}</button>
+    ${op?`<div class="bon">${BON.map(([k,e,m,pt])=>`<div class="row sp"><span style="font-size:15px;line-height:1.1">${e}${t('b_'+k)} <small>${pt}</small></span><div class="stp"><button data-a="bo" data-k="${k}" data-p="${i}" data-d="-1">−</button><output>${R.bo[i][k]}</output><button data-a="bo" data-k="${k}" data-p="${i}" data-d="1">+</button></div></div>`).join('')}<div class="row sp"><span style="font-size:15px;line-height:1.1">✏️ ${t('b_f')} <small>±5</small></span><div class="stp"><button data-a="bo" data-k="f" data-p="${i}" data-d="-1">−</button><output>${f>0?'+'+f:f}</output><button data-a="bo" data-k="f" data-p="${i}" data-d="1">+</button></div></div><p class="hint" style="margin:6px 0 0">${t(G.mode==='sk'?'h_sk':'h_ra')}</p></div>`:''}</div>`;
+  });
+  h+=R.ok?`<p class="ok" style="text-align:center;margin:6px 0">${t('valid')}</p>`:`<button class="big" data-a="val">${t('validate')}</button>`;
+  h+=`<div class="nav"><button class="small" data-a="go" data-r="${Math.max(0,r-1)}" ${r===0?'disabled style="opacity:.4"':''}>${t('prev')}</button><button class="small" data-a="go" data-r="${Math.min(last,r+1)}" ${r===last?'disabled style="opacity:.4"':''}>${t('next')}</button></div>`;
+  return h;
+}
+
+function renderTable(){
+  const pls=G.players;
+  let h=`<p class="hint" style="color:var(--mute)">${t('th')}</p><div class="tw"><table><thead><tr><th>#</th>${pls.map(p=>`<th>${esc(p)}</th>`).join('')}</tr></thead><tbody>`;
+  G.rounds.forEach((R,ri)=>{h+=`<tr data-a="goT" data-r="${ri}"><td>${ri+1}</td>${pls.map((_,pi)=>{const s=score(ri,pi);return s===null?'<td>–</td>':`<td class="${s<0?'neg':''}">${fmt(s)}<small>${R.bid[pi]}/${R.tr[pi]}</small></td>`}).join('')}</tr>`});
+  return h+`</tbody><tfoot><tr><td>Σ</td>${pls.map((_,i)=>`<td>${fmt(total(i))}</td>`).join('')}</tr></tfoot></table></div><p class="hint" style="color:var(--mute);margin-top:8px">${t('tf')}</p>`;
+}
+
+function render(){
+  if(!G||G._setup)renderSetup();else $('#app').innerHTML=renderGame();
+}
+function clampStep(v,d,max){return v==null?(d>0?0:null):Math.max(0,Math.min(max,v+d))}
+
+document.addEventListener('input',e=>{if(e.target.classList.contains('nm'))setup.pl[+e.target.dataset.i]=e.target.value});
+document.addEventListener('change',e=>{
+  if(e.target.id==='lang'){lang=e.target.value;LS('sk_lang',lang);const open=document.querySelector('.modal');render();if(open)settings()}
+  if(e.target.id==='fmt'){setup.fmt=e.target.value;renderSetup()}
+});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a,p=+b.dataset.p,d=+b.dataset.d;
+  if(a==='mode'){setup.mode=b.dataset.m;renderSetup();return}
+  if(a==='cannon'){setup.cannon=!setup.cannon;renderSetup();return}
+  if(a==='cnt'){setup.n=Math.max(2,Math.min(8,setup.n+d));while(setup.pl.length<setup.n)setup.pl.push('');renderSetup();return}
+  if(a==='pick'){const nm=names[+b.dataset.i];if(setup.pl.slice(0,setup.n).includes(nm))return;let k=setup.pl.slice(0,setup.n).findIndex(x=>!x.trim());if(k<0){if(setup.n<8){setup.n++;k=setup.n-1;while(setup.pl.length<setup.n)setup.pl.push('')}else return}setup.pl[k]=nm;renderSetup();return}
+  if(a==='del'){const nm=names[+b.dataset.i];ask(t('forget',esc(nm)),()=>{names.splice(+b.dataset.i,1);LS('sk_names',names);renderSetup()},t('del'));return}
+  if(a==='start'){startGame();return}
+  if(a==='resume'){delete G._setup;view='round';render();return}
+  if(a==='menu'){settings();return}
+  if(!G)return;
+  const R=G.rounds[G.cur];
+  if(a==='val'){const go=()=>{R.ok=true;if(G.cur<G.rounds.length-1)G.cur++;save();render();window.scrollTo(0,0)};const sm=R.tr.reduce((x,y)=>x+y,0),n=G.cards[G.cur];sm===n?go():ask(t('vw',sm,n),go,t('valb'));return}
+  if(a==='view'){view=b.dataset.v}
+  else if(a==='go'||a==='goT'){G.cur=+b.dataset.r;view='round'}
+  else if(a==='bid'){R.bid[p]=clampStep(R.bid[p],d,G.cards[G.cur])}
+  else if(a==='tr'){R.tr[p]=clampStep(R.tr[p],d,trMax(R,p))}
+  else if(a==='cn'){R.cn[p]=b.dataset.v==='1'}
+  else if(a==='bt'){const k=G.cur+'_'+p;openBonus[k]=!openBonus[k]}
+  else if(a==='bo'){const k=b.dataset.k;if(k==='f')R.bo[p].f=Math.max(-500,Math.min(500,(R.bo[p].f||0)+5*d));else{const m=BON.find(x=>x[0]===k)[2];R.bo[p][k]=Math.max(0,Math.min(m,R.bo[p][k]+d))}}
+  const y=window.scrollY;save();render();if(a!=='go'&&a!=='goT'&&a!=='view')window.scrollTo(0,y);else window.scrollTo(0,0);
+});
+if(G&&G.rounds){delete G._setup;G.cards=G.cards||[1,2,3,4,5,6,7,8,9,10];G.rounds.forEach(R=>{if(R.ok===undefined){R.ok=R.bid.every(x=>x!=null)&&R.tr.every(x=>x!=null);R.bid=R.bid.map(x=>x??0);R.tr=R.tr.map(x=>x??0)}R.cn=R.cn||G.players.map(()=>false)});save()}
+applyZoom();render();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
