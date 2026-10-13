@@ -101,6 +101,10 @@ td small{display:block;font-size:12px;opacity:.65}
 .tg.on{background:var(--red);color:#fff;border-color:#000}
 .rd.bv::after{content:'⚔';position:absolute;right:-3px;top:-5px;font-size:11px;background:var(--gold);color:var(--ink);border-radius:50%;width:16px;height:16px;line-height:16px;font-family:sans-serif}
 .mod{color:var(--red);font-weight:700}
+.nrow{display:flex;gap:6px;margin-bottom:8px}
+.nrow input.nm{margin-bottom:0;flex:1;min-width:0}
+.clr{flex:0 0 44px;border:2px solid #b9a06a;border-radius:8px;background:#fff4d2;color:var(--red);font-weight:700;font-size:18px;padding:0}
+.clr:active{background:#f0d9a0}
 </style>
 </head>
 <body>
@@ -184,7 +188,7 @@ function renderSetup(){
   <div class="card"><h2>${t('fmt')}</h2><select id="fmt" class="sel">${Object.keys(FM).map(k=>`<option value="${k}" ${k===s.fmt?'selected':''}>${t('f_'+k)}</option>`).join('')}</select><p class="hint" style="margin:8px 0 0">${t('finfo',FM[s.fmt].length,FM[s.fmt].join(', '))}</p></div>
   <div class="card"><h2>${t('crew')}</h2>
     <div class="row sp" style="margin-bottom:10px"><span>${t('count')}</span><div class="stp"><button data-a="cnt" data-d="-1">−</button><output>${s.n}</output><button data-a="cnt" data-d="1">+</button></div></div>
-    ${s.pl.slice(0,s.n).map((p,i)=>`<input class="nm" data-i="${i}" maxlength="16" placeholder="${t('pirate')} ${i+1}" value="${esc(p)}" autocomplete="off">`).join('')}
+    ${s.pl.slice(0,s.n).map((p,i)=>`<div class="nrow"><input class="nm" data-i="${i}" maxlength="16" placeholder="${t('pirate')} ${i+1}" value="${esc(p)}" autocomplete="off"><button class="clr" data-a="clr" data-i="${i}" aria-label="✕">✕</button></div>`).join('')}
     <p class="hint" style="margin-top:10px">${t('saved')}</p>
     <div class="chips">${names.length?names.map((n,i)=>`<div class="chip"><button data-a="pick" data-i="${i}">${esc(n)}</button><button class="x" data-a="del" data-i="${i}" aria-label="${t('del')}">✕</button></div>`).join(''):`<span class="hint">${t('none')}</span>`}</div>
   </div>
@@ -287,6 +291,7 @@ document.addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b)return;
   const a=b.dataset.a,p=+b.dataset.p,d=+b.dataset.d;
   if(a==='mode'){setup.mode=b.dataset.m;renderSetup();return}
+  if(a==='clr'){setup.pl[+b.dataset.i]='';renderSetup();return}
   if(a==='cannon'){setup.cannon=!setup.cannon;renderSetup();return}
   if(a==='cnt'){setup.n=Math.max(2,Math.min(8,setup.n+d));while(setup.pl.length<setup.n)setup.pl.push('');renderSetup();return}
   if(a==='pick'){const nm=names[+b.dataset.i];if(setup.pl.slice(0,setup.n).includes(nm))return;let k=setup.pl.slice(0,setup.n).findIndex(x=>!x.trim());if(k<0){if(setup.n<8){setup.n++;k=setup.n-1;while(setup.pl.length<setup.n)setup.pl.push('')}else return}setup.pl[k]=nm;renderSetup();return}
