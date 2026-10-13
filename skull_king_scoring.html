@@ -105,6 +105,12 @@ td small{display:block;font-size:12px;opacity:.65}
 .nrow input.nm{margin-bottom:0;flex:1;min-width:0}
 .clr{flex:0 0 44px;border:2px solid #b9a06a;border-radius:8px;background:#fff4d2;color:var(--red);font-weight:700;font-size:18px;padding:0}
 .clr:active{background:#f0d9a0}
+.pickbtn{padding:10px 12px;font:inherit;font-size:17px;border:2px solid #b9a06a;border-radius:8px;background:#fff9e6;color:var(--ink)}
+.opt{display:block;width:100%;text-align:left;position:relative;padding:12px 40px 12px 14px;margin-bottom:8px;border:2px solid #b9a06a;border-radius:10px;background:#f7edcf;color:var(--ink)}
+.opt b{font-family:'Pirata One',serif;font-weight:400;font-size:21px;display:block}
+.opt small{font-size:14px;opacity:.8}
+.opt i{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--red);font-size:20px}
+.opt.on{border-color:var(--red);background:#fff4d2}
 </style>
 </head>
 <body>
@@ -160,7 +166,7 @@ function settings(){
   document.querySelectorAll('.modal').forEach(x=>x.remove());
   const m=document.createElement('div');m.className='modal';
   m.innerHTML=`<div class="card"><h2>⚙ ${t('settings')}</h2>
-  <div class="row sp" style="margin-bottom:12px"><span>🌐 ${t('lang')}</span><select id="lang" class="sel" style="width:auto">${Object.keys(L).map(k=>`<option value="${k}" ${k===lang?'selected':''}>${L[k].name}</option>`).join('')}</select></div>
+  <div class="row sp" style="margin-bottom:12px"><span>🌐 ${t('lang')}</span><button class="pickbtn" data-a="plang">${L[lang].name} ▾</button></div>
   <div class="row sp" style="margin-bottom:14px"><span>🔎 ${t('zoom')}</span><div class="stp"><button data-z="-1">−</button><output id="zv" style="min-width:58px;font-size:20px">${zoom}%</output><button data-z="1">+</button></div></div>
   <button class="big" style="font-size:22px;padding:10px" data-ng>＋ ${t('newg')}</button>
   <div class="row"><button class="small" style="color:var(--parch)" data-n>${t('close')}</button></div></div>`;
@@ -182,7 +188,7 @@ function chipsHTML(){
 function renderSetup(){
   const s=setup,ra=s.mode==='ra';document.documentElement.lang=lang;
   $('#app').innerHTML=`
-  <div class="row" style="justify-content:flex-end"><label class="hint" style="margin:0;color:var(--mute)">🌐 <select id="lang" class="sel" style="width:auto;padding:4px 8px;font-size:15px">${Object.keys(L).map(k=>`<option value="${k}" ${k===lang?'selected':''}>${L[k].name}</option>`).join('')}</select></label></div>
+  <div class="row" style="justify-content:flex-end"><button class="pickbtn" style="background:#0006;color:var(--parch);border-color:#ffffff40;font-size:15px;padding:6px 12px" data-a="plang">🌐 ${L[lang].name} ▾</button></div>
   <div class="title"><div class="skull">☠️</div><h1>Skull King</h1><p>${t('tag')}</p></div>
   ${G?`<button class="big" style="margin-bottom:14px;background:linear-gradient(var(--green),#245c39);box-shadow:0 5px 0 #153823" data-a="resume">${t('resume')}</button>`:''}
   <div class="card"><h2>${t('calc')}</h2><div class="modes">
@@ -190,7 +196,7 @@ function renderSetup(){
     <button class="mode ${ra?'on':''}" data-a="mode" data-m="ra"><b>🗡 Rascal</b><small>${t('rad')}</small></button>
   </div>
   ${ra?`<button class="mode ${s.cannon?'on':''}" style="width:100%;margin-top:10px" data-a="cannon"><b>${t('cn')}</b><small>${t('cnd')}</small></button>`:''}</div>
-  <div class="card"><h2>${t('fmt')}</h2><select id="fmt" class="sel">${Object.keys(FM).map(k=>`<option value="${k}" ${k===s.fmt?'selected':''}>${t('f_'+k)}</option>`).join('')}</select><p class="hint" style="margin:8px 0 0">${t('finfo',FM[s.fmt].length,FM[s.fmt].join(', '))}</p></div>
+  <div class="card"><h2>${t('fmt')}</h2><button class="pickbtn" style="width:100%;text-align:left" data-a="pfmt">${t('f_'+s.fmt)} ▾</button><p class="hint" style="margin:8px 0 0">${t('finfo',FM[s.fmt].length,FM[s.fmt].join(', '))}</p></div>
   <div class="card"><h2>${t('crew')}</h2>
     <div class="row sp" style="margin-bottom:10px"><span>${t('count')}</span><div class="stp"><button data-a="cnt" data-d="-1">−</button><output>${s.n}</output><button data-a="cnt" data-d="1">+</button></div></div>
     ${s.pl.slice(0,s.n).map((p,i)=>`<div class="nrow"><input class="nm" data-i="${i}" maxlength="16" placeholder="${t('pirate')} ${i+1}" value="${esc(p)}" autocomplete="off"><button class="clr" data-a="clr" data-i="${i}" aria-label="✕">✕</button></div>`).join('')}
@@ -288,14 +294,19 @@ function render(){
 function clampStep(v,d,max){return v==null?(d>0?0:null):Math.max(0,Math.min(max,v+d))}
 
 document.addEventListener('input',e=>{if(e.target.classList.contains('nm')){setup.pl[+e.target.dataset.i]=e.target.value;const c=document.getElementById('chips');if(c)c.innerHTML=chipsHTML()}});
-document.addEventListener('change',e=>{
-  if(e.target.id==='lang'){lang=e.target.value;LS('sk_lang',lang);const open=document.querySelector('.modal');render();if(open)settings()}
-  if(e.target.id==='fmt'){setup.fmt=e.target.value;renderSetup()}
-});
+function setLang(v){lang=v;LS('sk_lang',lang);const open=document.querySelector('.modal');render();if(open)settings()}
+function pick(title,opts,cur,cb){
+  const m=document.createElement('div');m.className='modal';
+  m.innerHTML=`<div class="card" style="max-height:80vh;overflow:auto"><h2>${esc(title)}</h2>${opts.map(o=>`<button class="opt ${o.v===cur?'on':''}" data-v="${o.v}"><b>${esc(o.l)}</b>${o.s?`<small>${esc(o.s)}</small>`:''}${o.v===cur?'<i>✓</i>':''}</button>`).join('')}<div class="row"><button class="small" style="color:var(--parch)" data-n>${t('cancel')}</button></div></div>`;
+  m.onclick=e=>{const o=e.target.closest('[data-v]');if(o){m.remove();cb(o.dataset.v);return}if(e.target===m||e.target.closest('[data-n]'))m.remove()};
+  document.body.appendChild(m);
+}
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b)return;
   const a=b.dataset.a,p=+b.dataset.p,d=+b.dataset.d;
   if(a==='mode'){setup.mode=b.dataset.m;renderSetup();return}
+  if(a==='plang'){pick(t('lang'),Object.keys(L).map(k=>({v:k,l:L[k].name})),lang,setLang);return}
+  if(a==='pfmt'){pick(t('fmt'),Object.keys(FM).map(k=>({v:k,l:t('f_'+k),s:t('finfo',FM[k].length,FM[k].join(', '))})),setup.fmt,v=>{setup.fmt=v;renderSetup()});return}
   if(a==='clr'){setup.pl[+b.dataset.i]='';renderSetup();return}
   if(a==='cannon'){setup.cannon=!setup.cannon;renderSetup();return}
   if(a==='cnt'){setup.n=Math.max(2,Math.min(8,setup.n+d));while(setup.pl.length<setup.n)setup.pl.push('');renderSetup();return}
