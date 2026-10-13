@@ -174,6 +174,11 @@ function settings(){
 }
 
 /* ---------- SETUP ---------- */
+function chipsHTML(){
+  if(!names.length)return `<span class="hint">${t('none')}</span>`;
+  const used=new Set(setup.pl.slice(0,setup.n).map(x=>x.trim().toLowerCase()));
+  return names.map((n,i)=>used.has(n.toLowerCase())?'':`<div class="chip"><button data-a="pick" data-i="${i}">${esc(n)}</button><button class="x" data-a="del" data-i="${i}" aria-label="${t('del')}">✕</button></div>`).join('');
+}
 function renderSetup(){
   const s=setup,ra=s.mode==='ra';document.documentElement.lang=lang;
   $('#app').innerHTML=`
@@ -190,7 +195,7 @@ function renderSetup(){
     <div class="row sp" style="margin-bottom:10px"><span>${t('count')}</span><div class="stp"><button data-a="cnt" data-d="-1">−</button><output>${s.n}</output><button data-a="cnt" data-d="1">+</button></div></div>
     ${s.pl.slice(0,s.n).map((p,i)=>`<div class="nrow"><input class="nm" data-i="${i}" maxlength="16" placeholder="${t('pirate')} ${i+1}" value="${esc(p)}" autocomplete="off"><button class="clr" data-a="clr" data-i="${i}" aria-label="✕">✕</button></div>`).join('')}
     <p class="hint" style="margin-top:10px">${t('saved')}</p>
-    <div class="chips">${names.length?names.map((n,i)=>`<div class="chip"><button data-a="pick" data-i="${i}">${esc(n)}</button><button class="x" data-a="del" data-i="${i}" aria-label="${t('del')}">✕</button></div>`).join(''):`<span class="hint">${t('none')}</span>`}</div>
+    <div class="chips" id="chips">${chipsHTML()}</div>
   </div>
   <button class="big" data-a="start">${t('start')}</button>`;
 }
@@ -282,7 +287,7 @@ function render(){
 }
 function clampStep(v,d,max){return v==null?(d>0?0:null):Math.max(0,Math.min(max,v+d))}
 
-document.addEventListener('input',e=>{if(e.target.classList.contains('nm'))setup.pl[+e.target.dataset.i]=e.target.value});
+document.addEventListener('input',e=>{if(e.target.classList.contains('nm')){setup.pl[+e.target.dataset.i]=e.target.value;const c=document.getElementById('chips');if(c)c.innerHTML=chipsHTML()}});
 document.addEventListener('change',e=>{
   if(e.target.id==='lang'){lang=e.target.value;LS('sk_lang',lang);const open=document.querySelector('.modal');render();if(open)settings()}
   if(e.target.id==='fmt'){setup.fmt=e.target.value;renderSetup()}
