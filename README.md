@@ -1,20 +1,37 @@
-# ☠️ Skull King – Journal de bord
+# ☠️ Scorekeeper for Skull King
 
-Application web mobile (PWA) pour gérer les scores du jeu de plis **Skull King** : mises, plis gagnés, bonus, classement et tableau récapitulatif, le tout sur une seule page HTML sans dépendance ni serveur.
+Application mobile pour gérer les scores du jeu de plis **Skull King** : mises, plis gagnés, bonus, classement et tableau récapitulatif.
 
-> Projet de fan, non officiel. *Skull King* est une marque de Grandpa Beck's Games. Cette application ne contient ni les règles complètes ni les illustrations du jeu.
+> Projet de fan, non officiel et sans lien avec Grandpa Beck's Games. *Skull King* est une marque de son propriétaire.
 
 ## Fonctionnalités
 
-- **2 modes de calcul** au choix au début de la partie :
-  - **Skull King** (classique) : 20 pts par pli si la mise est exacte, pénalités sinon.
-  - **Rascal** : 10 pts par carte distribuée, tout, moitié ou rien selon la précision.
-- **Règle optionnelle Rascal « Boulet de canon »** : choix Chevrotine / Boulet de canon pour chaque joueur et chaque manche (15 pts par carte si la mise est exacte, sinon 0).
-- **7 formats de partie** : Classique, Pas d'impair, Prêt au combat, Attaque éclair, Tir de barrage, Tourbillon, L'heure du dodo.
-- **2 à 8 joueurs**, avec mémorisation des noms utilisés (et suppression possible).
-- **Bonus** : 14 de couleur, 14 noir, sirènes, pirates et Skull King capturés, plus un ajustement libre par pas de 5 pour les règles maison.
-- **Validation de la manche** avec contrôle du total des plis, et modification possible à tout moment d'une manche passée : les totaux sont recalculés immédiatement.
-- **Classement en direct**, tableau récapitulatif et proclamation du « Capitaine des Sept Mers » en fin de partie.
-- **Réglages** (⚙) : langue, taille de l'affichage (70 % à 150 %), nouvelle partie.
-- **5 langues** : français (par défaut), anglais, espagnol, allemand, italien.
-- **Hors ligne** une fois installée, et sauvegarde automatique de la partie en cours dans le `localStorage` du navigateur.
+- **Deux modes de calcul** : Skull King (classique) et Rascal, avec la règle optionnelle « Boulet de canon ».
+- **Sept formats de partie** : classique (10 manches), Pas d'impair, Prêt au combat, Attaque éclair, Tir de barrage, Tourbillon, L'heure du dodo.
+- **2 à 8 joueurs**, avec mémorisation des noms.
+- **Manche en deux temps** : validation des mises (avec le total par rapport au nombre de plis), puis validation de la manche.
+- **Corrections possibles à tout moment**, signalées par ✎ quand elles ont lieu après validation.
+- **Bonus** : 14, sirènes, pirates, Skull King et ajustement libre par pas de 5.
+- **5 langues** : français, anglais, espagnol, allemand, italien.
+- **Taille d'affichage réglable** (70 % à 150 %).
+- **Fonctionne hors ligne** et sauvegarde automatiquement la partie en cours.
+
+## Utilisation
+
+### Sur Android (APK)
+
+1. Ouvrez la page [Releases](../../releases) du dépôt et téléchargez le fichier `.apk` de la dernière version.
+2. Ouvrez-le sur le téléphone et autorisez l'installation depuis cette source si Android le demande.
+3. Lancez l'appli.
+
+### Dans un navigateur
+
+Ouvrez simplement le fichier `index.html` dans un navigateur (téléphone ou ordinateur). Aucune installation ni connexion n'est nécessaire, hormis le chargement des polices (voir ci-dessous).
+
+## Données
+
+Les noms enregistrés, la langue, la taille d'affichage et la partie en cours sont stockés localement sur l'appareil. Rien n'est envoyé sur Internet. Ces données sont propres à chaque appareil et à chaque navigateur, et elles sont effacées si l'appli est désinstallée.
+
+## Polices
+
+La version HTML charge les polices *Pirata One*, *Cinzel* et *Alegreya* depuis Google Fonts. Hors connexion, elle utilise une police de secours. L'APK embarque ses polices.
