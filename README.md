@@ -27,6 +27,7 @@ Application mobile pour gérer les scores du jeu de plis **Skull King** : mises,
 ### Dans un navigateur
 
 Ouvrez simplement le fichier `index.html` dans un navigateur (téléphone ou ordinateur). Aucune installation ni connexion n'est nécessaire, hormis le chargement des polices (voir ci-dessous).
+Directement depuis ce dépôt : [https://xiigle.github.io/skull_king_scoring/](https://xiigle.github.io/skull_king_scoring/)
 
 ## Données
 
