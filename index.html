@@ -110,6 +110,9 @@ td small{display:block;font-size:12px;opacity:.65}
 .opt small{font-size:14px;opacity:.8}
 .opt i{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--red);font-size:20px}
 .opt.on{border-color:var(--red);background:#fff4d2}
+html.lock{overflow:hidden}
+.modal{overscroll-behavior:contain;touch-action:none}
+.modal .card{touch-action:pan-y;overscroll-behavior:contain}
 </style>
 </head>
 <body>
@@ -333,6 +336,7 @@ document.addEventListener('click',e=>{
   const y=window.scrollY;save();render();if(a!=='go'&&a!=='goT'&&a!=='view')window.scrollTo(0,y);else window.scrollTo(0,0);
 });
 if(G&&G.rounds){delete G._setup;G.cards=G.cards||[1,2,3,4,5,6,7,8,9,10];G.rounds.forEach(R=>{if(R.ok===undefined){R.ok=R.bid.every(x=>x!=null)&&R.tr.every(x=>x!=null);R.bid=R.bid.map(x=>x??0);R.tr=R.tr.map(x=>x??0)}R.cn=R.cn||G.players.map(()=>false);R.bv=R.bv??!!R.ok;R.mod=R.mod||{}});save()}
+new MutationObserver(()=>document.documentElement.classList.toggle('lock',!!document.querySelector('.modal'))).observe(document.body,{childList:true});
 applyZoom();render();
 </script>
 </body>
