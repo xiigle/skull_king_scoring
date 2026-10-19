@@ -223,7 +223,7 @@ matchMedia('(display-mode: standalone)').addEventListener&&matchMedia('(display-
 function renderSetup(){
   const s=setup,ra=s.mode==='ra';document.documentElement.lang=lang;
   $('#app').innerHTML=`
-  <div class="row" style="justify-content:flex-end;flex-wrap:wrap"><span id="install" style="display:contents"></span><button class="pickbtn" style="background:#0006;color:var(--parch);border-color:#ffffff40;font-size:15px;padding:6px 12px" data-a="plang">🌐 ${L[lang].name} ▾</button></div>
+  <div class="row" style="justify-content:space-between;flex-wrap:wrap"><span id="install" style="display:contents"></span><button class="pickbtn" style="margin-left:auto;background:#0006;color:var(--parch);border-color:#ffffff40;font-size:15px;padding:6px 12px" data-a="plang">🌐 ${L[lang].name} ▾</button></div>
   <div class="title"><div class="skull">☠️</div><h1>Skull King</h1><p>${t('tag')}</p></div>
   ${G?`<button class="big" style="margin-bottom:14px;background:linear-gradient(var(--green),#245c39);box-shadow:0 5px 0 #153823" data-a="resume">${t('resume')}</button>`:''}
   <div class="card"><h2>${t('calc')}</h2><div class="modes">
