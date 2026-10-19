@@ -17,7 +17,6 @@
 @font-face{font-family:'Cinzel';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/cinzel-700.woff2) format('woff2')}
 @font-face{font-family:'Alegreya';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/alegreya-400.woff2) format('woff2')}
 @font-face{font-family:'Alegreya';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/alegreya-700.woff2) format('woff2')}
-.inst{display:block;margin:18px auto 0;background:none;border:2px dashed #e3b04b88;color:var(--gold);border-radius:10px;padding:10px 16px;font:inherit;font-size:17px}
 :root{--sea:#0b1d2a;--deep:#07121b;--wood:#3b2414;--wood2:#5a3820;--parch:#f0e2bd;--ink:#2b1a0e;--gold:#e3b04b;--red:#b3261e;--green:#3f8f5a;--mute:#9fb3bf;--num:'Cinzel','Georgia',serif;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -208,7 +207,7 @@ const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||matchMe
 function updateInstall(){
   const el=document.getElementById('install');if(!el)return;
   const show=!isStandalone()&&((isIOS())||(isAndroid()&&deferred));
-  el.innerHTML=show?`<button class="inst" data-a="install">📲 ${t('inst')}</button>`:'';
+  el.innerHTML=show?`<button class="pickbtn" style="background:#0006;color:var(--parch);border-color:#ffffff40;font-size:15px;padding:6px 12px" data-a="install">📲 ${t('inst')}</button>`:'';
 }
 async function installApp(){
   if(isIOS()){info(t('iost'),t('iosb'));return}
@@ -224,7 +223,7 @@ matchMedia('(display-mode: standalone)').addEventListener&&matchMedia('(display-
 function renderSetup(){
   const s=setup,ra=s.mode==='ra';document.documentElement.lang=lang;
   $('#app').innerHTML=`
-  <div class="row" style="justify-content:flex-end"><button class="pickbtn" style="background:#0006;color:var(--parch);border-color:#ffffff40;font-size:15px;padding:6px 12px" data-a="plang">🌐 ${L[lang].name} ▾</button></div>
+  <div class="row" style="justify-content:flex-end;flex-wrap:wrap"><span id="install" style="display:contents"></span><button class="pickbtn" style="background:#0006;color:var(--parch);border-color:#ffffff40;font-size:15px;padding:6px 12px" data-a="plang">🌐 ${L[lang].name} ▾</button></div>
   <div class="title"><div class="skull">☠️</div><h1>Skull King</h1><p>${t('tag')}</p></div>
   ${G?`<button class="big" style="margin-bottom:14px;background:linear-gradient(var(--green),#245c39);box-shadow:0 5px 0 #153823" data-a="resume">${t('resume')}</button>`:''}
   <div class="card"><h2>${t('calc')}</h2><div class="modes">
@@ -239,7 +238,7 @@ function renderSetup(){
     <p class="hint" style="margin-top:10px">${t('saved')}</p>
     <div class="chips" id="chips">${chipsHTML()}</div>
   </div>
-  <button class="big" data-a="start">${t('start')}</button><div id="install"></div>`;
+  <button class="big" data-a="start">${t('start')}</button>`;
   updateInstall();
 }
 
