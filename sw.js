@@ -1,4 +1,4 @@
-const C='skull-king-v4';
+const C='skull-king-v5';
 const CORE=['./','index.html','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-512.png','icons/apple-touch-icon.png'];
 const FONTS=['fonts/pirata-one-400.woff2','fonts/cinzel-700.woff2','fonts/alegreya-400.woff2','fonts/alegreya-700.woff2'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(CORE).then(()=>Promise.all(FONTS.map(f=>c.add(f).catch(()=>{}))))).then(()=>self.skipWaiting()))});
