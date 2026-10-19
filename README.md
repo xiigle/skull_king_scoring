@@ -25,7 +25,7 @@ Directement depuis ce dépôt : [https://xiigle.github.io/skull_king_scoring/](h
 
 ### Sur un smartphone comme application
 
-Lancer l'application depuis le [dépôt](https://xiigle.github.io/skull_king_scoring/) et installer via le menu du navigateur comme application (ou utiliser le lien en bas de la page de démarrage d'une nouvelle partie)
+Lancer l'application depuis le <a href="https://xiigle.github.io/skull_king_scoring/" target="_blank" rel="noopener noreferrer">dépôt</a> et installer via le menu du navigateur comme application (ou utiliser le lien en bas de la page de démarrage d'une nouvelle partie)
 
 ## Données
 
