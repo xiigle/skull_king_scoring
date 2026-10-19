@@ -18,21 +18,15 @@ Application mobile pour gérer les scores du jeu de plis **Skull King** : mises,
 
 ## Utilisation
 
-### Sur Android (APK)
-
-1. Ouvrez la page [Releases](../../releases) du dépôt et téléchargez le fichier `.apk` de la dernière version.
-2. Ouvrez-le sur le téléphone et autorisez l'installation depuis cette source si Android le demande.
-3. Lancez l'appli.
-
 ### Dans un navigateur
 
-Ouvrez simplement le fichier `index.html` dans un navigateur (téléphone ou ordinateur). Aucune installation ni connexion n'est nécessaire, hormis le chargement des polices (voir ci-dessous).
+Télécharger le code et ouvrez simplement le fichier `index.html` dans un navigateur (téléphone ou ordinateur). Aucune installation ni connexion n'est nécessaire.
 Directement depuis ce dépôt : [https://xiigle.github.io/skull_king_scoring/](https://xiigle.github.io/skull_king_scoring/)
+
+### Sur un smartphone comme application
+
+Lancer l'application depuis le [dépôt](https://xiigle.github.io/skull_king_scoring/) et installer via le menu du navigateur comme application (ou utiliser le lien en bas de la page de démarrage d'une nouvelle partie)
 
 ## Données
 
 Les noms enregistrés, la langue, la taille d'affichage et la partie en cours sont stockés localement sur l'appareil. Rien n'est envoyé sur Internet. Ces données sont propres à chaque appareil et à chaque navigateur, et elles sont effacées si l'appli est désinstallée.
-
-## Polices
-
-La version HTML charge les polices *Pirata One*, *Cinzel* et *Alegreya* depuis Google Fonts. Hors connexion, elle utilise une police de secours. L'APK embarque ses polices.
