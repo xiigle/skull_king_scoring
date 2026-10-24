@@ -4,6 +4,17 @@ Application mobile pour gérer les scores du jeu de plis **Skull King** : mises,
 
 > Projet de fan, non officiel et sans lien avec Grandpa Beck's Games. *Skull King* est une marque de son propriétaire.
 
+## 🚀 Utilisation
+
+### En local
+Télécharger le zip du dépôt, dézipper et ouvrir simplement `index.html` dans un navigateur (double-clic).
+
+### Hébergée sur GitHub Pages
+[https://xiigle.github.io/skull_king_scoring/](https://xiigle.github.io/skull_king_scoring/)
+
+### Sur un smartphone comme application
+Lancer l'application depuis le dépôt (lien ci-dessus) et installer via le menu du navigateur comme application (ou utiliser le lien sur la page de démarrage d'une nouvelle partie de l'application)
+
 ## Fonctionnalités
 
 - **Deux modes de calcul** : Skull King (classique) et Rascal, avec la règle optionnelle « Boulet de canon ».
@@ -15,17 +26,6 @@ Application mobile pour gérer les scores du jeu de plis **Skull King** : mises,
 - **5 langues** : français, anglais, espagnol, allemand, italien.
 - **Taille d'affichage réglable** (70 % à 150 %).
 - **Fonctionne hors ligne** et sauvegarde automatiquement la partie en cours.
-
-## Utilisation
-
-### Dans un navigateur
-
-Télécharger le code et ouvrez simplement le fichier `index.html` dans un navigateur (téléphone ou ordinateur). Aucune installation ni connexion n'est nécessaire.
-Ou directement depuis ce dépôt : [https://xiigle.github.io/skull_king_scoring/](https://xiigle.github.io/skull_king_scoring/)
-
-### Sur un smartphone comme application
-
-Lancer l'application depuis le dépôt (lien ci-dessus) et installer via le menu du navigateur comme application (ou utiliser le lien en bas de la page de démarrage d'une nouvelle partie de l'application)
 
 ## Données
 
